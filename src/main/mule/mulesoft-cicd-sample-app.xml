@@ -10,6 +10,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 	</http:listener-config>
 	<flow name="mulesoft-cicd-sample-appFlow" doc:id="3a3f7916-be2c-471f-b4dc-fce87670ed38" >
 		<http:listener doc:name="Listener" doc:id="ebbb7e4a-7c97-454f-bec2-f478d960d0cd" config-ref="HTTP_Listener_config" path="/ci-cd-test"/>
+		<logger level="INFO" doc:name="Logger" doc:id="60fbde05-01a7-4fd2-8639-97845468a132" message='"Request received"'/>
 		<set-payload value="#[%dw 2.0
 output application/json
 var aName= attributes.queryParams.name
