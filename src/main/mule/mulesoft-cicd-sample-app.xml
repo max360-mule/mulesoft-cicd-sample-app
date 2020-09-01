@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="5bdac829-a1b5-44a0-b5c8-f9c595e3f32c" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="mulesoft-cicd-sample-appFlow" doc:id="3a3f7916-be2c-471f-b4dc-fce87670ed38" >
+		<http:listener doc:name="Listener" doc:id="ebbb7e4a-7c97-454f-bec2-f478d960d0cd" config-ref="HTTP_Listener_config" path="/ci-cd-test"/>
+		<set-payload value="#[%dw 2.0
+output application/json
+var aName= attributes.queryParams.name
+---
+(&quot;Hello&quot; ++ &quot; &quot; ++ (aName default &quot;&quot;) ++ &quot; &quot; ++ &quot;today is&quot; ++ &quot; &quot; ++ (now() as String {format:'MM-dd-yyyy'}))]" doc:name="Set Payload" doc:id="5071beb4-c9aa-4b14-a030-2118ae6741e6" />
+	</flow>
+</mule>
